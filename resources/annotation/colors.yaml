@@ -1,0 +1,221 @@
+consensus_signature:
+  HRD-Dup: "#5890c0"
+  HRD-Del: "#62a766"
+  HRD: "#4ac4b9"
+  FBI: "#833216"
+  TD: "#d1352d"
+  Undetermined: "#7f7f7f" # grey50
+  NA: "#cccccc" # grey80
+consensus_signature_short:
+  HRD: "#5890c0" # "#5D9C93"
+  HRP: "#833216" # "#AA3422"
+  Undetermined: "#7f7f7f" # grey50
+  NA: "#cccccc" # grey80
+myriad_signature:
+  HRD: "#5890c0"
+  HRP: "#833216"
+  Undetermined: "#7f7f7f" # grey50
+  NA: "#cccccc" # grey80
+driver:
+  BRCA1: "#5890c0"
+  BRCA2: "#62a766"
+  ATM: "#4ac4b9"
+  ATR: "#4ac4b9"
+  BRIP1: "#4ac4b9"
+  PALB2: "#4ac4b9"
+  CCNE1: "#833216"
+  CDK12: "#d1352d"
+  MYC: "#7f7f7f"
+  Not altered: "#7f7f7f" # grey50
+  All: "#cccccc" # grey80
+  NA: "#cccccc" # grey80
+hr_status:
+  HRD: "#5890c0"
+  HRP: "#833216"
+  Undetermined: "#7f7f7f" # grey50
+  NA: "#cccccc" # grey80
+BRCA_gene_status:
+  BRCA1: "#5890c0"
+  BRCA2: "#62a766"
+  NA: "#cccccc" # grey80
+BRCA_mutation_status:
+  Germline: "#5890c0"
+  Somatic: "#62a766"
+  NA: "#cccccc" # grey80
+BRCA_gene_mutation_status:
+  gBRCA1: "#5890c0"
+  gBRCA2: "#62a766"
+  sBRCA1: "#5890c0"
+  sBRCA2: "#62a766"
+  NA: "#cccccc" # grey80
+tumor_megasite:
+  Adnexa: "#ff0000"
+  Ascites: "#56B4E9"
+  Other: "#56B4E9"
+tumor_supersite:
+  Adnexa: "#ff0000"
+  Ascites: "#E69F00" # palette_OkabeIto[1]
+  Bowel: "#56B4E9" # palette_OkabeIto[2]
+  Omentum: "#0072B2" # palette_OkabeIto[3]
+  Peritoneum: "#F0E442" # palette_OkabeIto[4]
+  Upper Quadrant: "#009E73" # palette_OkabeIto[5]
+  UQ: "#009E73" # palette_OkabeIto[5]
+  Other: "#999999" # grey60
+  Unknown: "#999999" # grey60
+tumor_site:
+  Left Adnexa: "#ff0000"
+  Right Adnexa: "#ff0000"
+  Ascites: "#E69F00" # palette_OkabeIto[1]
+  Bowel: "#56B4E9" # palette_OkabeIto[2]
+  Omentum: "#0072B2" # palette_OkabeIto[3]
+  Pelvic Peritoneum: "#F0E442" # palette_OkabeIto[4]
+  Left Upper Quadrant: "#009E73" # palette_OkabeIto[5]
+  Right Upper Quadrant: "#009E73" # palette_OkabeIto[5]
+  Other: "#999999" # grey60
+  Unknown: "#999999" # grey60
+tumor_type:
+  Primary: "#ff0000"
+  Metastasis: "#56B4E9" # palette_OkabeIto[2]
+  Unknown: "#999999" # grey60
+patient_id: 
+  SPECTRUM-OV-002: "#ee2f00"
+  SPECTRUM-OV-003: "#ee2f24"
+  SPECTRUM-OV-004: "#ef3e24" ######### updated in v7
+  SPECTRUM-OV-007: "#f04e23"
+  SPECTRUM-OV-008: "#f37120"
+  SPECTRUM-OV-009: "#f7951e"
+  SPECTRUM-OV-014: "#feba11"
+  SPECTRUM-OV-022: "#fbe10c"
+  SPECTRUM-OV-024: "#efea17"
+  SPECTRUM-OV-025: "#d1dd25"
+  SPECTRUM-OV-026: "#b3d234"
+  SPECTRUM-OV-031: "#9aca3b"
+  SPECTRUM-OV-036: "#84c440"
+  SPECTRUM-OV-037: "#75c043"
+  SPECTRUM-OV-041: "#75c000"
+  SPECTRUM-OV-042: "#6dbe00"
+  SPECTRUM-OV-045: "#6dbe45"
+  SPECTRUM-OV-046: "#6fbe45" ######### updated in v7
+  SPECTRUM-OV-049: "#71bf44"
+  SPECTRUM-OV-050: "#70c166"
+  SPECTRUM-OV-051: "#6fc48c"
+  SPECTRUM-OV-052: "#6fc7ae"
+  SPECTRUM-OV-053: "#6fcbcd"
+  SPECTRUM-OV-054: "#64cbe5"
+  SPECTRUM-OV-065: "#35c5f3"
+  SPECTRUM-OV-067: "#4499d4"
+  SPECTRUM-OV-068: "#3e76ba"
+  SPECTRUM-OV-070: "#3d63ae"
+  SPECTRUM-OV-071: "#3c58a7"
+  SPECTRUM-OV-075: "#3954a5"
+  SPECTRUM-OV-077: "#3d54a5"
+  SPECTRUM-OV-080: "#4953a4"
+  SPECTRUM-OV-081: "#5d52a3"
+  SPECTRUM-OV-082: "#7052a2"
+  SPECTRUM-OV-083: "#8651a1"
+  SPECTRUM-OV-085: "#9c509f"
+  SPECTRUM-OV-089: "#b4519f"
+  SPECTRUM-OV-090: "#c74c9c"
+  SPECTRUM-OV-105: "#dd4198"
+  SPECTRUM-OV-107: "#ec1890"
+  SPECTRUM-OV-110: "#ec1472"
+  SPECTRUM-OV-112: "#ed1b50"
+  SPECTRUM-OV-115: "#ed1e2e"
+  SPECTRUM-OV-116: "#cd0000" ######### updated in v7
+  SPECTRUM-OV-118: "#b00000" ######### updated in v7
+therapy:
+  pre-Rx: "#CCABD8"
+  post-Rx: "#8474A1"
+clone_id:
+  1: "#FF0000"
+  2: "#005EB5"
+  3: "#009D00"
+  4: "#FF008C"
+  5: "#FFCC00"
+  6: "#FF9000"
+  7: "#B90088"
+  8: "#00B4D7"
+  9: "#69D800"
+  10: "#20239E"
+  11: "#FF5E00"
+  12: "#71008C"
+  13: "#B8EE00"
+  14: "#00A9A9"
+  15: "#F2FC00"
+treatment_generic_name:
+  Carboplatin: "#4FC3F7"
+  Doxorubicin Liposomal: "#00ACC1"
+  Olaparib: "#00897B"
+  Paclitaxel: "#43A047"
+  Paclitaxel Protein-Bound: "#8BC34A"
+clone_specificity:
+  Private: "#e31a1c"
+  Shared: "#6a3d9a"
+copy_number:
+  0: "#3182BD"
+  1: "#9ECAE1"
+  2: "#CCCCCC"
+  3: "#FDCC8A"
+  4: "#FC8D59"
+  5: "#E34A33"
+  6: "#B30000"
+  7: "#980043"
+  8: "#DD1C77"
+  9: "#DF65B0"
+  10: "#C994C7"
+  # 11+: "#D4B9DA"
+rearrangement_type:
+  duplication: "#3182BD"
+  deletion: "#9ECAE1"
+  inversion: "#CCCCCC"
+  translocation: "#FDCC8A"
+ploidy:
+  Haploid: "red"
+  Diploid: "#CCABD8"
+  Triploid: "blue"
+  Tetraploid: "blue"
+  Polyploid: "#8474A1"
+cn_state:
+  Gain: "#ff0000"
+  Loss: "#0072B2"
+ascn_state_short:
+  Balanced: "#3182BD"
+  Imbalanced: "#9ECAE1"
+  LOH: "#CCCCCC"
+ascn_state:
+  A-Hom: "#025767"
+  A-LOH: "#025767"
+  A-Gained: "#53AFC0"
+  B-Hom: "#A75200"
+  B-LOH: "#A75200"
+  B-Gained: "#FF9E41"
+  Balanced: "#d5d5d4"
+pathology_stage:
+  IIB: "#f1eef6" #
+  # III: "#C7E9B4"
+  IIIA1ii: "#d0d1e6" #
+  IIIA2: "#a6bddb" #
+  IIIB: "#74a9cf"
+  IIIC: "#3690c0"
+  IVA: "#0570b0"
+  IVB: "#034e7b"
+chemo_intent:
+  Primary: "#66c2a4"
+  NACT/IDS: "#2ca25f"
+  Salvage: "#006d2c"
+mutation:
+  DEL: "#374b88"
+  AMP: "#c83934"
+  MUT: "#adadaa"
+  SNP: "#008000"
+  INS: "pink"
+  ONP: "white"
+  DNP: "white"
+  HOMDEL: "#374b88"
+  Germline: "white"
+  Somatic: "black"
+  Fusion: "#6e3171"
+  Unknown: "grey"
+  Missense_Mutation: "#6a9492"
+  Truncating_Mutation: "#724b86"
+  In_Frame_Mutation: "#b3653a"
