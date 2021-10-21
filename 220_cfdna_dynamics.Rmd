@@ -95,3 +95,90 @@ p <- db$specimens_lab_medicine %>%
 p
 
 ```
+
+### CA125 + cfDNA + recurrence + surgery
+
+```{r}
+
+# CA125 levels
+biomarkers_tbl <- db$laboratory_tests %>% 
+  dplyr::filter(patient_id %in% included_patients,
+                laboratory_test_name %in% c("Cancer Antigen 125 (CA 125)")) %>% 
+  group_by(patient_id) %>%
+  dplyr::arrange(laboratory_test_date) %>%
+  dplyr::mutate(
+    laboratory_test_date_diff = laboratory_test_date - first(laboratory_test_date),
+    laboratory_test_date = as.numeric(laboratory_test_date, units = "days"),
+    laboratory_test_date_diff = as.numeric(laboratory_test_date_diff, units = "days")
+    ) %>%
+  dplyr::filter(laboratory_test_date_diff > 0 & !is.na(laboratory_test_date_diff)) %>%
+  dplyr::mutate(
+    laboratory_test_biomarker_level = as.numeric(laboratory_test_biomarker_level),
+    laboratory_test_biomarker_level_baseline = laboratory_test_biomarker_level - first(laboratory_test_biomarker_level),
+    laboratory_test_biomarker_level_diff = laboratory_test_biomarker_level - lag(laboratory_test_biomarker_level),
+    laboratory_test_biomarker_level_minimum = rank(laboratory_test_biomarker_level, ties.method="first")==1,
+    laboratory_test_biomarker_level_after_minimum = if_else(row_number() > which.min(laboratory_test_biomarker_level), "After min CA 125", "Before min CA 125")
+    ) %>%
+  ungroup
+
+
+recur <- db$response %>% 
+  mutate(d = response_first_recurrence_ct_scan_date - response_pre_treatment_tissue_collection_date) %>% 
+  select(patient_id, d) %>% 
+  filter(patient_id_short %in% biomarkers_tbl$patient_id_short)
+
+cfdna <- db$specimens_lab_medicine %>% 
+  filter(!is.na(specimen_lab_medicine_cfdna_total_yield)) %>% 
+  group_by(patient_id) %>% 
+  mutate(n_cfdna = n(), 
+         min_cfdna = min(specimen_lab_medicine_cfdna_total_yield), 
+         max_cfdna = max(specimen_lab_medicine_cfdna_total_yield), 
+         mean_cfdna = mean(specimen_lab_medicine_cfdna_total_yield)) %>% 
+  dplyr::mutate(
+    specimen_lab_medicine_collection_date_diff = 
+      specimen_lab_medicine_collection_date - first(specimen_lab_medicine_collection_date),
+    specimen_lab_medicine_collection_date = as.numeric(specimen_lab_medicine_collection_date, units = "days"),
+    specimen_lab_medicine_collection_date_diff = as.numeric(specimen_lab_medicine_collection_date_diff, units = "days")
+    ) %>%
+  ungroup() %>% 
+  mutate(patient_id_short = str_remove(patient_id, "SPECTRUM-OV-")) %>% 
+  select(patient_id, patient_id_short, specimen_lab_medicine_collection_date, specimen_lab_medicine_cfdna_total_yield, n_cfdna, max_cfdna, min_cfdna, mean_cfdna, specimen_lab_medicine_collection_date_diff) %>% 
+  filter(patient_id_short %in% biomarkers_tbl$patient_id_short)
+
+first_date <- biomarkers_tbl %>% 
+  group_by(patient_id) %>% 
+  summarize(first_date = first(laboratory_test_date))
+
+surgery <-  db$surgeries %>% 
+  select(patient_id, patient_id_short, surgery_date) %>% 
+  left_join(first_date) %>% 
+  mutate(surgery_date2 = surgery_date - first_date) %>% 
+  mutate(surgery_date2 = ifelse(surgery_date2 < 0, 0, surgery_date2)) %>% #hack to remove non-negative dates
+  filter(patient_id_short %in% biomarkers_tbl$patient_id_short)
+```
+
+```{r fig.height = 16, fig.width = 16}
+biomarkers_tbl %>%
+  ggplot() +
+  geom_line(aes(x=laboratory_test_date_diff, y=as.numeric(laboratory_test_biomarker_level)),color = "grey10") +
+  geom_point(aes(x=laboratory_test_date_diff, y=as.numeric(laboratory_test_biomarker_level)), size=0.75) +
+  geom_rect(data = recur, 
+            aes(xmin = d), xmax = Inf, ymin = 0, ymax = Inf, color = "grey60", alpha = .1) +
+  geom_vline(data = cfdna, 
+             aes(xintercept = specimen_lab_medicine_collection_date_diff, col = "cfDNA"), 
+             alpha = 0.75, lty = 2) +
+  geom_vline(data = surgery, aes(xintercept = surgery_date2, col = "Surgery")) +
+  scale_x_continuous(breaks = scales::breaks_width(365)) +
+  scale_y_log10(breaks = 10^(-1:10),
+                labels = trans_format("log10", math_format(10^.x))) +
+  labs(title=unique(biomarkers_tbl$laboratory_test_name), 
+       x='Time from baseline (days)', y=unique(biomarkers_tbl$laboratory_test_biomarker_units), 
+       color='') +
+  theme(plot.title = element_text(size=14),
+        panel.grid.major.x = element_line(size=.1, color="grey50", linetype = "dashed"),
+        panel.grid.major.y = element_line(size=.1, color="grey50", linetype = "dashed")) +
+  facet_wrap(glue::glue("{patient_id_short}") ~ .) +
+  scale_color_manual(values = c("firebrick4", "deepskyblue4")) +
+  panel_border()
+
+```
