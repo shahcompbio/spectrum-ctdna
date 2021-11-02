@@ -219,3 +219,6 @@ mutation:
   Missense_Mutation: "#6a9492"
   Truncating_Mutation: "#724b86"
   In_Frame_Mutation: "#b3653a"
+response:
+  Recurrence: "#94b6d2"
+  NED: "#dc4040"

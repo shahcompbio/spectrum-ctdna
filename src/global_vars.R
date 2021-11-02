@@ -72,14 +72,14 @@ protocol_patients <- db$consents %>%
 # - Exclude patients on clinical trials (e.g. 17-182)
 included_patients <- db$patients %>%
   filter(patient_inclusion_exclusion=="Included") %>%
-  filter(patient_cohort_version___2=="Checked") %>%
-  filter(patient_id %in% hgsoc_patients) %>%
+  # filter(patient_cohort_version___2=="Checked") %>%
+  # filter(patient_id %in% hgsoc_patients) %>%
   # filter(!patient_id %in% protocol_patients) %>%
   pull(patient_id)
 
 # Define patients included in the study with scDNA data
 scdna_patients <- db$sequencing_scdna %>%
-  filter(patient_id %in% included_patients) %>%
+  # filter(patient_id %in% included_patients) %>%
   filter(qc_status == "Pass") %>%
   pull(patient_id) %>%
   unique
