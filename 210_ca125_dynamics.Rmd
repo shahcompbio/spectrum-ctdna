@@ -36,8 +36,6 @@ library(scales)
 library(lubridate)
 
 source("src/global_vars.R")
-source("src/plot_inventory_heatmap.R")
-source("src/plot_oncoprint_heatmap.R")
 
 db <- db %>%
   map(~mutate(.x, patient_id_short = str_remove_all(patient_id, "SPECTRUM-OV-")))
@@ -157,9 +155,9 @@ p <- biomarkers_tbl %>%
 
 p
 
-ggsave_pdf("figures/210_ca125_dynamics/001_ca125_time_series_scdna_patients.pdf",
-           p, width = 16, height = 16)
-ggsave_png("figures/210_ca125_dynamics/001_ca125_time_series_scdna_patients.png",
-           p, width = 16, height = 16)
+# ggsave_pdf("figures/210_ca125_dynamics/001_ca125_time_series_scdna_patients.pdf",
+#            p, width = 16, height = 16)
+# ggsave_png("figures/210_ca125_dynamics/001_ca125_time_series_scdna_patients.png",
+#            p, width = 16, height = 16)
 
 ```
