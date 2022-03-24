@@ -25,7 +25,7 @@ remove_guides <- guides(color = F, fill = F, shape = F, alpha = F, size = F)
 ## ggsave wrapper suppressing dingbats symbols 
 ## for adobe illustrator compatibility
 ggsave_pdf <- function(filename, plot = last_plot(), device = NULL, path = NULL, 
-                       scale = 1, width = NA, height = NA, units = c("in", "cm", "mm"), 
+                       scale = 1, width = NA, height = NA, units = "in",#units = c("in", "cm", "mm"), 
                        dpi = 300, limitsize = TRUE, ...) {
   ggsave(filename = filename, plot = plot, device = cairo_pdf, path = path, 
          scale = scale, width = width, height = height, units = units, 
@@ -33,7 +33,7 @@ ggsave_pdf <- function(filename, plot = last_plot(), device = NULL, path = NULL,
 }
 
 ggsave_png <- function(filename, plot = last_plot(), device = NULL, path = NULL, 
-                       scale = 1, width = NA, height = NA, units = c("in", "cm", "mm"), 
+                       scale = 1, width = NA, height = NA, units = "in",#units = c("in", "cm", "mm"), 
                        dpi = 300, limitsize = TRUE, type = "cairo", ...) {
   ggsave(filename = filename, plot = plot, device = device, path = path, 
          scale = scale, width = width, height = height, units = units, 
@@ -78,9 +78,41 @@ included_patients <- db$patients %>%
   pull(patient_id)
 
 # Define patients included in the study with scDNA data
+cfdna_patients <- db$sequencing_cfdna %>%
+  filter(patient_id %in% included_patients) %>%
+         # qc_status == "Pass") %>%
+  pull(patient_id) %>%
+  unique
+
+# Define patients included in the study with scDNA data
 scdna_patients <- db$sequencing_scdna %>%
-  # filter(patient_id %in% included_patients) %>%
-  filter(qc_status == "Pass") %>%
+  filter(patient_id %in% included_patients,
+         qc_status == "Pass") %>%
+  pull(patient_id) %>%
+  unique
+
+# # Define patients included in the study with scRNA data
+# scrna_patients <- db$sequencing_scrna %>%
+#   # filter(patient_id %in% included_patients) %>%
+#   filter(qc_status == "Pass") %>%
+#   pull(patient_id) %>%
+#   unique
+
+# Define patients included in the study with bulk DNA data
+bulk_dna_patients <- db$sequencing_bulk_dna %>%
+  filter(patient_id %in% included_patients,
+         patient_id %in% union(scdna_patients, cfdna_patients),
+         qc_status == "Pass") %>%
+  distinct(patient_id) %>%
+  pull(patient_id) %>%
+  unique
+
+# Define patients included in the study with IMPACT data
+impact_patients <- db$sequencing_msk_impact_custom %>%
+  filter(patient_id %in% included_patients,
+         patient_id %in% union(scdna_patients, cfdna_patients),
+         qc_status == "Pass") %>%
+  distinct(patient_id) %>%
   pull(patient_id) %>%
   unique
 
@@ -108,6 +140,10 @@ scdna_meta_tbl <- db$sequencing_scdna %>%
 cfdna_meta_tbl <- db$sequencing_cfdna %>%
   mutate(patient_id_short = str_remove_all(patient_id, "SPECTRUM-OV-")) %>% 
   filter(patient_id %in% included_patients) %>% 
+  # left_join(db$specimens_lab_medicine %>%
+  #             mutate(specimen_lab_medicine_accession = as.character(specimen_lab_medicine_accession)) %>%
+  #             select(-c("patient_id")), 
+  #           by = c("isabl_id" = "specimen_lab_medicine_accession")) %>%
   left_join(signature_tbl, by = "patient_id")
 
 ## load WGS meta data -------------------------------
