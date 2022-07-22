@@ -107,6 +107,15 @@ bulk_dna_patients <- db$sequencing_bulk_dna %>%
   pull(patient_id) %>%
   unique
 
+# Define patients included in the study with Nanopore data
+nanopore_patients <- db$sequencing_nanopore %>%
+  filter(patient_id %in% included_patients,
+         patient_id %in% union(scdna_patients, cfdna_patients),
+         qc_status == "Pass") %>%
+  distinct(patient_id) %>%
+  pull(patient_id) %>%
+  unique
+
 # Define patients included in the study with IMPACT data
 impact_patients <- db$sequencing_msk_impact_custom %>%
   filter(patient_id %in% included_patients,
